@@ -329,29 +329,46 @@ function checkEnd(field) {
 }
 
 function revealAround(field, i, j) {
+    field[i][j].inside = '';
     try {
         field[i][j - 1].openned = true;
+        if (field[i][j - 1].inside === '0')
+            revealAround(field, i, j - 1);
     } catch (e) {}
     try {
         field[i - 1][j - 1].openned = true;
+        if (field[i - 1][j - 1].inside === '0')
+            revealAround(field, i - 1, j - 1);
     } catch (e) {}
     try {
         field[i + 1][j - 1].openned = true;
+        if (field[i + 1][j - 1].inside === '0')
+            revealAround(field, i + 1, j - 1);
     } catch (e) {}
     try {
         field[i - 1][j].openned = true;
+        if (field[i - 1][j].inside === '0')
+            revealAround(field, i - 1, j);
     } catch (e) {}
     try {
         field[i + 1][j].openned = true;
+        if (field[i + 1][j].inside === '0')
+            revealAround(field, i + 1, j);
     } catch (e) {}
     try {
         field[i - 1][j + 1].openned = true;
+        if (field[i - 1][j + 1].inside === '0')
+            revealAround(field, i - 1, j + 1);
     } catch (e) {}
     try {
         field[i][j + 1].openned = true;
+        if (field[i][j + 1].inside === '0')
+            revealAround(field, i, j + 1);
     } catch (e) {}
     try {
         field[i + 1][j + 1].openned = true;
+        if (field[i + 1][j + 1].inside === '0')
+            revealAround(field, i + 1, j + 1);
     } catch (e) {}
 }
 
