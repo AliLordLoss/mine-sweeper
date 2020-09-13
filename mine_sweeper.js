@@ -271,46 +271,22 @@ function calc_nums(field) {
             if (field[i][j].inside === 'mine') continue;
 
             let counter = 0;
-            try {
-                if (field[i][j - 1].inside === 'mine') {
-                    counter++;
-                }
-            } catch (e) {}
-            try {
-                if (field[i - 1][j - 1].inside === 'mine') {
-                    counter++;
-                }
-            } catch (e) {}
-            try {
-                if (field[i + 1][j - 1].inside === 'mine') {
-                    counter++;
-                }
-            } catch (e) {}
-            try {
-                if (field[i - 1][j].inside === 'mine') {
-                    counter++;
-                }
-            } catch (e) {}
-            try {
-                if (field[i + 1][j].inside === 'mine') {
-                    counter++;
-                }
-            } catch (e) {}
-            try {
-                if (field[i - 1][j + 1].inside === 'mine') {
-                    counter++;
-                }
-            } catch (e) {}
-            try {
-                if (field[i][j + 1].inside === 'mine') {
-                    counter++;
-                }
-            } catch (e) {}
-            try {
-                if (field[i + 1][j + 1].inside === 'mine') {
-                    counter++;
-                }
-            } catch (e) {}
+            if (is_mine(field, i, j - 1))
+                counter++;
+            if (is_mine(field, i - 1, j - 1))
+                counter++;
+            if (is_mine(field, i + 1, j - 1))
+                counter++;
+            if (is_mine(field, i - 1, j))
+                counter++;
+            if (is_mine(field, i + 1, j))
+                counter++;
+            if (is_mine(field, i - 1, j + 1))
+                counter++;
+            if (is_mine(field, i, j + 1))
+                counter++;
+            if (is_mine(field, i + 1, j + 1))
+                counter++;
             field[i][j].inside = counter.toString();
         }
     }
@@ -328,48 +304,41 @@ function checkEnd(field) {
     return true;
 }
 
+function is_mine(field, i, j) {
+    if (0 <= i && i < field.length && 0 <= j && j < field[i].length) {
+        if (field[i][j].inside === 'mine') return true;
+    }
+    return false;
+}
+
+function reveal(field, i, j) {
+    if (0 <= i && i < field.length && 0 <= j && j < field[i].length) {
+        field[i][j].openned = true;
+        if (field[i][j].inside === '0') return true;
+    }
+    return false;
+}
+
 function revealAround(field, i, j) {
+    if (!(0 <= i < field.length && 0 <= j < field[i].length))
+        return;
     field[i][j].inside = '';
-    try {
-        field[i][j - 1].openned = true;
-        if (field[i][j - 1].inside === '0')
-            revealAround(field, i, j - 1);
-    } catch (e) {}
-    try {
-        field[i - 1][j - 1].openned = true;
-        if (field[i - 1][j - 1].inside === '0')
-            revealAround(field, i - 1, j - 1);
-    } catch (e) {}
-    try {
-        field[i + 1][j - 1].openned = true;
-        if (field[i + 1][j - 1].inside === '0')
-            revealAround(field, i + 1, j - 1);
-    } catch (e) {}
-    try {
-        field[i - 1][j].openned = true;
-        if (field[i - 1][j].inside === '0')
-            revealAround(field, i - 1, j);
-    } catch (e) {}
-    try {
-        field[i + 1][j].openned = true;
-        if (field[i + 1][j].inside === '0')
-            revealAround(field, i + 1, j);
-    } catch (e) {}
-    try {
-        field[i - 1][j + 1].openned = true;
-        if (field[i - 1][j + 1].inside === '0')
-            revealAround(field, i - 1, j + 1);
-    } catch (e) {}
-    try {
-        field[i][j + 1].openned = true;
-        if (field[i][j + 1].inside === '0')
-            revealAround(field, i, j + 1);
-    } catch (e) {}
-    try {
-        field[i + 1][j + 1].openned = true;
-        if (field[i + 1][j + 1].inside === '0')
-            revealAround(field, i + 1, j + 1);
-    } catch (e) {}
+    if (reveal(field, i, j - 1))
+        revealAround(field, i, j - 1);
+    if (reveal(field, i - 1, j - 1))
+        revealAround(field, i - 1, j - 1);
+    if (reveal(field, i + 1, j - 1))
+        revealAround(field, i + 1, j - 1);
+    if (reveal(field, i - 1, j))
+        revealAround(field, i - 1, j);
+    if (reveal(field, i + 1, j))
+        revealAround(field, i + 1, j);
+    if (reveal(field, i - 1, j + 1))
+        revealAround(field, i - 1, j + 1);
+    if (reveal(field, i, j + 1))
+        revealAround(field, i, j + 1);
+    if (reveal(field, i + 1, j + 1))
+        revealAround(field, i + 1, j + 1);
 }
 
 let field = [];
