@@ -94,7 +94,7 @@ function init() {
         let i = Math.floor(Math.random() * (canvas.height / 24));
         let j = Math.floor(Math.random() * (canvas.width / 24));
         console.log();
-        while (field[i][j] === 'mine') {
+        while (field[i][j].inside === 'mine') {
             i = Math.floor(Math.random() * (canvas.height / 24));
             j = Math.floor(Math.random() * (canvas.width / 24));
         }
@@ -125,13 +125,14 @@ function click(field) {
                         win.innerText = 'You Win!';
                         document.body.appendChild(win);
                     }
+                    draw(field);
                 }
                 else {
                     field[Math.floor(clickEvent.offsetY / 24)][Math.floor(clickEvent.offsetX / 24)].exploded = true;
                     end = true;
+                    draw(field);
                     draw_mines(field);
                 }
-                draw(field);
             }
         }
     }
@@ -345,3 +346,4 @@ let field = [];
 let end = false;
 document.getElementById('new game').addEventListener('click', newGame);
 init();
+console.log(field);
