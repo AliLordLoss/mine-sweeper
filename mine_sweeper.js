@@ -315,35 +315,25 @@ function is_mine(field, i, j) {
 function reveal(field, i, j) {
     if (0 <= i && i < field.length && 0 <= j && j < field[i].length) {
         field[i][j].openned = true;
-        if (field[i][j].inside === '0') return true;
+        if (field[i][j].inside === '0') revealAround(field, i, j);
     }
-    return false;
 }
 
 function revealAround(field, i, j) {
     if (!(0 <= i < field.length && 0 <= j < field[i].length))
         return;
     field[i][j].inside = '';
-    if (reveal(field, i, j - 1))
-        revealAround(field, i, j - 1);
-    if (reveal(field, i - 1, j - 1))
-        revealAround(field, i - 1, j - 1);
-    if (reveal(field, i + 1, j - 1))
-        revealAround(field, i + 1, j - 1);
-    if (reveal(field, i - 1, j))
-        revealAround(field, i - 1, j);
-    if (reveal(field, i + 1, j))
-        revealAround(field, i + 1, j);
-    if (reveal(field, i - 1, j + 1))
-        revealAround(field, i - 1, j + 1);
-    if (reveal(field, i, j + 1))
-        revealAround(field, i, j + 1);
-    if (reveal(field, i + 1, j + 1))
-        revealAround(field, i + 1, j + 1);
+    reveal(field, i, j - 1);
+    reveal(field, i - 1, j - 1);
+    reveal(field, i + 1, j - 1);
+    reveal(field, i - 1, j);
+    reveal(field, i + 1, j);
+    reveal(field, i - 1, j + 1);
+    reveal(field, i, j + 1);
+    reveal(field, i + 1, j + 1);
 }
 
 let field = [];
 let end = false;
 document.getElementById('new game').addEventListener('click', newGame);
 init();
-console.log(field);
